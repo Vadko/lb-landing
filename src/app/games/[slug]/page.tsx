@@ -278,6 +278,21 @@ export default async function GamePage({ params }: PageProps) {
                 </Link>
               </div>
 
+              {/* Steam Link */}
+              {game.steam_app_id && (
+                <div className="game-sidebar-card">
+                  <a
+                    href={`https://store.steampowered.com/app/${game.steam_app_id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-steam"
+                  >
+                    <i className="fa-brands fa-steam" />
+                    Сторінка в Steam
+                  </a>
+                </div>
+              )}
+
               {/* Stats */}
               <div className="game-sidebar-card">
                 <h3>Статистика</h3>

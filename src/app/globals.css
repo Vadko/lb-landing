@@ -529,103 +529,6 @@ a { text-decoration: none; color: white; transition: 0.3s; }
 .hero-visual:hover .main-shot { transform: perspective(1000px) rotateY(0); }
 .hero-visual:hover .back-shot { opacity: 0.4; filter: blur(0); top: -60px; right: -60px; }
 
-/* Features Grid */
-.features-grid-sec { padding: 50px 0 100px; }
-.grid-box {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-}
-.g-card {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    padding: 30px;
-    border-radius: 16px;
-    transition: 0.3s;
-    position: relative;
-    overflow: hidden;
-    color: white;
-    --mouse-x: 50%;
-    --mouse-y: 50%;
-    --gradient-angle: 0;
-}
-
-.g-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 16px;
-    background: conic-gradient(
-        from calc(var(--gradient-angle) * 1deg),
-        var(--accent-blue) 0deg,
-        var(--accent-purple) 90deg,
-        var(--accent-blue) 180deg,
-        var(--accent-purple) 270deg,
-        var(--accent-blue) 360deg
-    );
-    opacity: 0;
-    transition: opacity 0.2s ease;
-    z-index: 0;
-    pointer-events: none;
-    padding: 3px;
-    mask:
-        radial-gradient(
-            circle 150px at var(--mouse-x) var(--mouse-y),
-            black 0%,
-            transparent 100%
-        ),
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-    -webkit-mask:
-        radial-gradient(
-            circle 150px at var(--mouse-x) var(--mouse-y),
-            black 0%,
-            transparent 100%
-        ),
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-    -webkit-mask-composite: source-in, xor;
-    mask-composite: intersect, exclude;
-}
-
-.g-card:hover::before {
-    opacity: 1;
-}
-
-.g-card::after {
-    content: '';
-    position: absolute;
-    inset: 3px;
-    transition: 0.3s;
-    background: var(--glass-bg);
-    border-radius: 13px;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    z-index: 1;
-    pointer-events: none;
-}
-
-.g-card:hover {
-    transform: translateY(-5px);
-    border-color: transparent;
-}
-
-.g-card:hover::after {
-    background: rgba(0, 194, 255, 0.08);
-}
-
-.g-card > * {
-    position: relative;
-    z-index: 2;
-}
-
-.g-card i { font-size: 2rem; color: var(--accent-blue); margin-bottom: 20px; transition: 0.3s; }
-.g-card:hover i {
-    color: var(--accent-purple);
-    transform: scale(1.1);
-}
-.g-card h3 { margin-bottom: 10px; font-size: 1.3rem; }
-
 /* Gallery Section */
 .gallery-sec {
     padding: 100px 0;
@@ -1313,6 +1216,67 @@ footer {
     box-shadow: 0 10px 40px rgba(0, 194, 255, 0.3);
 }
 
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+    font-weight: 600;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.btn-secondary:hover {
+    border-color: var(--accent-blue);
+    transform: translateY(-2px);
+}
+
+/* 404 Page */
+.not-found-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.not-found-content {
+    text-align: center;
+}
+
+.not-found-code {
+    font-size: 8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 1rem;
+}
+
+.not-found-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.not-found-text {
+    color: var(--text-sec);
+    margin-bottom: 2rem;
+}
+
+.not-found-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
 /* Responsive */
 @media (max-width: 968px) {
     .container { padding: 0 15px; }
@@ -1406,15 +1370,6 @@ footer {
 
     .collab-card {
         padding: 30px 25px;
-    }
-
-    .grid-box {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-
-    .g-card {
-        padding: 25px;
     }
 }
 
@@ -1901,36 +1856,6 @@ footer {
     text-align: right;
 }
 
-/* Load More */
-.load-more-wrapper {
-    display: flex;
-    justify-content: center;
-    margin-top: 50px;
-}
-
-.load-more-btn {
-    padding: 14px 40px;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 12px;
-    color: var(--text-primary);
-    font-size: 1rem;
-    font-weight: 600;
-    font-family: inherit;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.load-more-btn:hover:not(:disabled) {
-    border-color: var(--accent-blue);
-    background: rgba(0, 194, 255, 0.1);
-}
-
-.load-more-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
 /* Empty State */
 .games-empty {
     text-align: center;
@@ -2318,6 +2243,30 @@ footer {
     box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);
 }
 
+/* Steam Button */
+.btn-steam {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, #1b2838, #2a475e);
+    color: white;
+    font-weight: 600;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.btn-steam:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(27, 40, 56, 0.4);
+}
+
+.light .btn-steam {
+    color: white;
+}
+
 .game-social-links {
     display: flex;
     gap: 10px;
@@ -2340,21 +2289,6 @@ footer {
 
 .game-social-link:hover {
     border-color: var(--accent-blue);
-    color: var(--accent-blue);
-}
-
-/* Back Button */
-.back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--text-sec);
-    font-size: 0.95rem;
-    margin-bottom: 20px;
-    transition: color 0.3s ease;
-}
-
-.back-link:hover {
     color: var(--accent-blue);
 }
 
@@ -2453,15 +2387,6 @@ footer {
 .light .search-input:focus {
     border-color: var(--accent-blue);
     box-shadow: 0 0 20px rgba(0, 149, 204, 0.1);
-}
-
-.light .load-more-btn {
-    background: rgba(255, 255, 255, 0.9);
-    border-color: rgba(0, 0, 0, 0.1);
-}
-
-.light .load-more-btn:hover:not(:disabled) {
-    background: rgba(0, 149, 204, 0.05);
 }
 
 .light .progress-bar {
