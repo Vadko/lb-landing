@@ -12,9 +12,9 @@ interface AllReleasesData {
 }
 
 async function fetchAllReleases(): Promise<AllReleasesData> {
-  // Fetch all releases to get total downloads
-  const allReleasesResponse = await fetch(
-    `https://api.github.com/repos/${GITHUB_REPO}/releases?per_page=100`,
+  // Fetch only latest release for version info (швидше)
+  const latestResponse = await fetch(
+    `https://api.github.com/repos/${GITHUB_REPO}/releases/latest`,
     {
       headers: {
         Accept: "application/vnd.github.v3+json",
@@ -23,23 +23,37 @@ async function fetchAllReleases(): Promise<AllReleasesData> {
     }
   );
 
-  if (!allReleasesResponse.ok) {
-    throw new Error("Failed to fetch releases");
+  if (!latestResponse.ok) {
+    throw new Error("Failed to fetch latest release");
   }
 
-  const allReleases: GitHubRelease[] = await allReleasesResponse.json();
+  const latest: GitHubRelease = await latestResponse.json();
 
-  if (allReleases.length === 0) {
-    throw new Error("No releases found");
+  // Fetch all releases тільки для підрахунку downloads
+  // Використовуємо per_page=100 і рахуємо тільки перші 20 релізів для швидкості
+  const allReleasesResponse = await fetch(
+    `https://api.github.com/repos/${GITHUB_REPO}/releases?per_page=20`,
+    {
+      headers: {
+        Accept: "application/vnd.github.v3+json",
+      },
+      next: { revalidate: 3600 },
+    }
+  );
+
+  let totalDownloads = 0;
+  if (allReleasesResponse.ok) {
+    const releases: GitHubRelease[] = await allReleasesResponse.json();
+    // Оптимізований підрахунок - один прохід
+    for (const release of releases) {
+      for (const asset of release.assets) {
+        totalDownloads += asset.download_count;
+      }
+    }
   }
-
-  // Calculate total downloads from all releases
-  const totalDownloads = allReleases.reduce((total, release) => {
-    return total + release.assets.reduce((sum, a) => sum + a.download_count, 0);
-  }, 0);
 
   return {
-    latest: allReleases[0],
+    latest,
     totalDownloads,
   };
 }

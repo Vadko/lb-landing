@@ -23,13 +23,13 @@ export function ParticlesBackground() {
           value: "transparent",
         },
       },
-      fpsLimit: 60,
+      fpsLimit: 30,
       particles: {
         number: {
-          value: 30,
+          value: 15,
           density: {
             enable: true,
-            area: 1200,
+            area: 1500,
           },
         },
         color: {
@@ -46,9 +46,9 @@ export function ParticlesBackground() {
         },
         links: {
           enable: true,
-          distance: 150,
+          distance: 200,
           color: "#00C2FF",
-          opacity: 0.15,
+          opacity: 0.12,
           width: 1,
         },
         move: {
