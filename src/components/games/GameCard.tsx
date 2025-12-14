@@ -11,13 +11,17 @@ interface GameCardProps {
 
 const STATUS_LABELS: Record<string, { label: string; className: string }> = {
   completed: { label: "Готово", className: "game-card-status completed" },
-  "in-progress": { label: "В розробці", className: "game-card-status in-progress" },
+  "in-progress": {
+    label: "В розробці",
+    className: "game-card-status in-progress",
+  },
   planned: { label: "Заплановано", className: "game-card-status planned" },
 };
 
 export function GameCard({ game }: GameCardProps) {
   const status = STATUS_LABELS[game.status] || STATUS_LABELS.planned;
-  const imageUrl = getImageUrl(game.banner_path) || getImageUrl(game.thumbnail_path);
+  const imageUrl =
+    getImageUrl(game.banner_path) || getImageUrl(game.thumbnail_path);
 
   return (
     <Link href={`/games/${game.slug}`} className="game-card">
@@ -42,13 +46,13 @@ export function GameCard({ game }: GameCardProps) {
         <p className="game-card-team">{game.team}</p>
 
         <div className="game-card-footer">
-          <span className={status.className}>
-            {status.label}
-          </span>
+          <span className={status.className}>{status.label}</span>
 
           {game.status !== "planned" && game.translation_progress > 0 && (
             <div className="game-card-progress">
-              <div className="game-card-progress-text">{game.translation_progress}%</div>
+              <div className="game-card-progress-text">
+                {game.translation_progress}%
+              </div>
               <div className="progress-bar">
                 <div
                   className="progress-bar-fill"

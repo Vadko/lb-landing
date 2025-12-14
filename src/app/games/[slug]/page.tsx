@@ -14,7 +14,9 @@ export async function generateStaticParams() {
   return slugs.map((slug) => ({ slug }));
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const game = await getGameBySlug(slug);
 
@@ -24,11 +26,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  const statusText = game.status === 'completed'
-    ? 'Повний переклад готовий!'
-    : game.status === 'in-progress'
-      ? `Переклад ${game.translation_progress}% готовий`
-      : 'Переклад в розробці';
+  const statusText =
+    game.status === "completed"
+      ? "Повний переклад готовий!"
+      : game.status === "in-progress"
+        ? `Переклад ${game.translation_progress}% готовий`
+        : "Переклад в розробці";
 
   const description = `Український переклад ${game.name} від ${game.team}. ${statusText} Завантажте безкоштовно через LB Launcher та грайте українською.`;
 
@@ -45,18 +48,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       `${game.name} ukrainian`,
       `скачати ${game.name} українською`,
       `як перекласти ${game.name}`,
-      'українізатор ігор',
-      'LB Launcher',
+      "українізатор ігор",
+      "LB Launcher",
     ],
     openGraph: {
       title: `${game.name} українською — Український переклад | LB Launcher`,
       description,
       images: game.banner_path ? [getImageUrl(game.banner_path)!] : undefined,
-      type: 'article',
-      locale: 'uk_UA',
+      type: "article",
+      locale: "uk_UA",
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title: `${game.name} українською`,
       description,
       images: game.banner_path ? [getImageUrl(game.banner_path)!] : undefined,
@@ -71,7 +74,10 @@ export const revalidate = 3600; // Revalidate every hour
 
 const STATUS_LABELS: Record<string, { label: string; className: string }> = {
   completed: { label: "Готово", className: "game-status-badge completed" },
-  "in-progress": { label: "В розробці", className: "game-status-badge in-progress" },
+  "in-progress": {
+    label: "В розробці",
+    className: "game-status-badge in-progress",
+  },
   planned: { label: "Заплановано", className: "game-status-badge planned" },
 };
 
@@ -119,7 +125,13 @@ export default async function GamePage({ params }: PageProps) {
             width={400}
             height={200}
             className="game-banner-logo"
-            style={{ objectFit: "contain", width: "auto", height: "auto", maxHeight: "150px", maxWidth: "400px" }}
+            style={{
+              objectFit: "contain",
+              width: "auto",
+              height: "auto",
+              maxHeight: "150px",
+              maxWidth: "400px",
+            }}
           />
         )}
       </div>
@@ -141,9 +153,7 @@ export default async function GamePage({ params }: PageProps) {
               <header className="game-header">
                 <div className="game-title-row">
                   <h1>{game.name}</h1>
-                  <span className={status.className}>
-                    {status.label}
-                  </span>
+                  <span className={status.className}>{status.label}</span>
                 </div>
                 <p className="game-meta">
                   Переклад від <strong>{game.team}</strong>
@@ -220,16 +230,20 @@ export default async function GamePage({ params }: PageProps) {
                 <h2>Як встановити український переклад {game.name}</h2>
                 <ol className="game-install-steps">
                   <li>
-                    <strong>Завантажте LB Launcher</strong> — безкоштовну програму для встановлення українських перекладів ігор
+                    <strong>Завантажте LB Launcher</strong> — безкоштовну
+                    програму для встановлення українських перекладів ігор
                   </li>
                   <li>
-                    <strong>Знайдіть {game.name}</strong> у каталозі ігор лаунчера
+                    <strong>Знайдіть {game.name}</strong> у каталозі ігор
+                    лаунчера
                   </li>
                   <li>
-                    <strong>Натисніть &quot;Встановити&quot;</strong> — переклад автоматично завантажиться та встановиться
+                    <strong>Натисніть &quot;Встановити&quot;</strong> — переклад
+                    автоматично завантажиться та встановиться
                   </li>
                   <li>
-                    <strong>Запустіть гру</strong> та насолоджуйтесь українською локалізацією!
+                    <strong>Запустіть гру</strong> та насолоджуйтесь українською
+                    локалізацією!
                   </li>
                 </ol>
               </section>
@@ -239,21 +253,42 @@ export default async function GamePage({ params }: PageProps) {
                 <h2>Часті питання про переклад {game.name}</h2>
                 <div className="faq-list">
                   <details className="faq-item">
-                    <summary>Чи безкоштовний український переклад {game.name}?</summary>
-                    <p>Так, переклад {game.name} від команди {game.team} повністю безкоштовний. Завантажте LB Launcher та встановіть українську локалізацію за кілька кліків.</p>
+                    <summary>
+                      Чи безкоштовний український переклад {game.name}?
+                    </summary>
+                    <p>
+                      Так, переклад {game.name} від команди {game.team} повністю
+                      безкоштовний. Завантажте LB Launcher та встановіть
+                      українську локалізацію за кілька кліків.
+                    </p>
                   </details>
                   <details className="faq-item">
-                    <summary>Чи потрібна ліцензійна гра для встановлення перекладу?</summary>
-                    <p>Так, для коректної роботи перекладу потрібна оригінальна гра {game.name}. Переклад працює з версіями з {game.platforms?.join(', ') || 'Steam, GOG, Epic Games'}.</p>
+                    <summary>
+                      Чи потрібна ліцензійна гра для встановлення перекладу?
+                    </summary>
+                    <p>
+                      Так, для коректної роботи перекладу потрібна оригінальна
+                      гра {game.name}. Переклад працює з версіями з{" "}
+                      {game.platforms?.join(", ") || "Steam, GOG, Epic Games"}.
+                    </p>
                   </details>
                   <details className="faq-item">
                     <summary>Як оновити переклад до нової версії?</summary>
-                    <p>LB Launcher автоматично перевіряє оновлення. Коли вийде нова версія перекладу, ви отримаєте сповіщення та зможете оновити в один клік.</p>
+                    <p>
+                      LB Launcher автоматично перевіряє оновлення. Коли вийде
+                      нова версія перекладу, ви отримаєте сповіщення та зможете
+                      оновити в один клік.
+                    </p>
                   </details>
                   {game.voice_progress && game.voice_progress > 0 && (
                     <details className="faq-item">
-                      <summary>Чи є українська озвучка для {game.name}?</summary>
-                      <p>Так! Команда {game.team} працює над українською озвучкою. Наразі озвучено {game.voice_progress}% гри.</p>
+                      <summary>
+                        Чи є українська озвучка для {game.name}?
+                      </summary>
+                      <p>
+                        Так! Команда {game.team} працює над українською
+                        озвучкою. Наразі озвучено {game.voice_progress}% гри.
+                      </p>
                     </details>
                   )}
                 </div>
@@ -297,12 +332,14 @@ export default async function GamePage({ params }: PageProps) {
               <div className="game-sidebar-card">
                 <h3>Статистика</h3>
                 <div className="game-stats-list">
-                  {game.downloads ? game.downloads > 0 && (
-                    <div className="game-stat">
-                      <span>Завантажень</span>
-                      <strong>{game.downloads.toLocaleString()}</strong>
-                    </div>
-                  ) : null}
+                  {game.downloads
+                    ? game.downloads > 0 && (
+                        <div className="game-stat">
+                          <span>Завантажень</span>
+                          <strong>{game.downloads.toLocaleString()}</strong>
+                        </div>
+                      )
+                    : null}
                   {game.platforms && game.platforms.length > 0 && (
                     <div className="game-stat">
                       <span>Платформи</span>
@@ -311,7 +348,9 @@ export default async function GamePage({ params }: PageProps) {
                   )}
                   <div className="game-stat">
                     <span>Оновлено</span>
-                    <strong>{new Date(game.updated_at).toLocaleDateString("uk-UA")}</strong>
+                    <strong>
+                      {new Date(game.updated_at).toLocaleDateString("uk-UA")}
+                    </strong>
                   </div>
                 </div>
               </div>
@@ -412,7 +451,7 @@ export default async function GamePage({ params }: PageProps) {
                 name: `Чи потрібна ліцензійна гра для встановлення перекладу ${game.name}?`,
                 acceptedAnswer: {
                   "@type": "Answer",
-                  text: `Так, для коректної роботи перекладу потрібна оригінальна гра ${game.name}. Переклад працює з версіями з ${game.platforms?.join(', ') || 'Steam, GOG, Epic Games'}.`,
+                  text: `Так, для коректної роботи перекладу потрібна оригінальна гра ${game.name}. Переклад працює з версіями з ${game.platforms?.join(", ") || "Steam, GOG, Epic Games"}.`,
                 },
               },
             ],

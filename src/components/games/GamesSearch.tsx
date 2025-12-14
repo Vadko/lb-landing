@@ -36,7 +36,10 @@ export function GamesSearch({
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -45,7 +48,8 @@ export function GamesSearch({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const selectedOption = STATUS_OPTIONS.find((opt) => opt.value === status) || STATUS_OPTIONS[0];
+  const selectedOption =
+    STATUS_OPTIONS.find((opt) => opt.value === status) || STATUS_OPTIONS[0];
 
   const handleSelect = (optionValue: string) => {
     onStatusChange(optionValue);
@@ -73,7 +77,9 @@ export function GamesSearch({
         >
           <i className={selectedOption.icon} />
           <span>{selectedOption.label}</span>
-          <i className={`fa-solid fa-chevron-down dropdown-arrow ${isOpen ? "rotated" : ""}`} />
+          <i
+            className={`fa-solid fa-chevron-down dropdown-arrow ${isOpen ? "rotated" : ""}`}
+          />
         </button>
 
         {isOpen && (

@@ -35,7 +35,9 @@ export function HeroSection() {
       () => {
         if (!isDeleting) {
           if (typewriterText.length < currentPhrase.length) {
-            setTypewriterText(currentPhrase.slice(0, typewriterText.length + 1));
+            setTypewriterText(
+              currentPhrase.slice(0, typewriterText.length + 1)
+            );
           } else {
             setTimeout(() => setIsDeleting(true), 2000);
           }
@@ -181,7 +183,9 @@ export function HeroSection() {
             {downloadLinks.totalDownloads > 0 && (
               <div>
                 <i className="fa-solid fa-download" />
-                <span>{downloadLinks.totalDownloads.toLocaleString()}+ Завантажень</span>
+                <span>
+                  {downloadLinks.totalDownloads.toLocaleString()}+ Завантажень
+                </span>
               </div>
             )}
           </div>

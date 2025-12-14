@@ -2,7 +2,8 @@ const CARDS = [
   {
     icon: "fa-solid fa-rocket",
     title: "Додайте свою гру",
-    description: "Український переклад вашої гри стане доступний тисячам користувачів.",
+    description:
+      "Український переклад вашої гри стане доступний тисячам користувачів.",
     link: "https://t.me/lb_launcher_bot",
     linkText: "Написати нам",
     linkIcon: "fa-brands fa-telegram",
@@ -11,7 +12,8 @@ const CARDS = [
   {
     icon: "fa-brands fa-github",
     title: "Відкритий код",
-    description: "Увесь код лаунчера доступний на GitHub — перевіряйте й долучайтеся.",
+    description:
+      "Увесь код лаунчера доступний на GitHub — перевіряйте й долучайтеся.",
     link: "https://github.com/Vadko/littlebit-launcher",
     linkText: "Переглянути код",
     linkIcon: "fa-brands fa-github",
@@ -20,7 +22,8 @@ const CARDS = [
   {
     icon: "fa-solid fa-users",
     title: "Спільнота",
-    description: "Приєднуйтеся до нашого Telegram-каналу — для новин і спілкування.",
+    description:
+      "Приєднуйтеся до нашого Telegram-каналу — для новин і спілкування.",
     link: "https://t.me/LittleBitUA",
     linkText: "Приєднатися",
     linkIcon: "fa-brands fa-telegram",

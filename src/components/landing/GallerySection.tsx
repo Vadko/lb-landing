@@ -8,38 +8,44 @@ const GALLERY_ITEMS = [
     src: "/assets/2.webp",
     alt: "Головний екран LB Launcher",
     label: "Головний екран",
-    description: "Каталог ігор з українськими перекладами. Шукайте, фільтруйте та встановлюйте локалізації в один клік.",
-    large: true
+    description:
+      "Каталог ігор з українськими перекладами. Шукайте, фільтруйте та встановлюйте локалізації в один клік.",
+    large: true,
   },
   {
     src: "/assets/1.webp",
     alt: "LB Launcher світла тема",
     label: "Світла тема",
-    description: "Лаунчер підтримує світлу та темну теми — обирайте те, що зручніше для ваших очей."
+    description:
+      "Лаунчер підтримує світлу та темну теми — обирайте те, що зручніше для ваших очей.",
   },
   {
     src: "/assets/3.webp",
     alt: "Налаштування LB Launcher",
     label: "Налаштування",
-    description: "Гнучкі налаштування: тема, мова інтерфейсу, шляхи до ігор та автооновлення."
+    description:
+      "Гнучкі налаштування: тема, мова інтерфейсу, шляхи до ігор та автооновлення.",
   },
   {
     src: "/assets/4.webp",
     alt: "Сповіщення LB Launcher",
     label: "Сповіщення",
-    description: "Отримуйте сповіщення про нові переклади та оновлення встановлених локалізацій."
+    description:
+      "Отримуйте сповіщення про нові переклади та оновлення встановлених локалізацій.",
   },
   {
     src: "/assets/5.webp",
     alt: "Деталі гри в LB Launcher",
     label: "Деталі гри",
-    description: "Детальна інформація про переклад: прогрес, команда перекладачів, версія та опис."
+    description:
+      "Детальна інформація про переклад: прогрес, команда перекладачів, версія та опис.",
   },
   {
     src: "/assets/7.webp",
     alt: "Процес завантаження в LB Launcher",
     label: "Процес завантаження",
-    description: "Швидке завантаження та автоматичне встановлення перекладу прямо в папку з грою."
+    description:
+      "Швидке завантаження та автоматичне встановлення перекладу прямо в папку з грою.",
   },
 ];
 
@@ -123,7 +129,10 @@ export function GallerySection() {
         </button>
 
         {lightboxIndex !== null && (
-          <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="lightbox-content"
+            onClick={(e) => e.stopPropagation()}
+          >
             <Image
               src={GALLERY_ITEMS[lightboxIndex].src}
               alt={GALLERY_ITEMS[lightboxIndex].alt}

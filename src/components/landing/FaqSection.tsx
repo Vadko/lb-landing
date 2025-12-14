@@ -40,12 +40,18 @@ const FAQ_ITEMS = [
 ];
 
 const TECH_STACK = [
-  { name: "Electron 39 + Vite", desc: "настільний фреймворк та швидке збирання" },
+  {
+    name: "Electron 39 + Vite",
+    desc: "настільний фреймворк та швидке збирання",
+  },
   { name: "React 18 + TypeScript", desc: "інтерфейс користувача" },
   { name: "Tailwind CSS", desc: "стилі та дизайн" },
   { name: "Framer Motion", desc: "плавні анімації інтерфейсу" },
   { name: "Zustand", desc: "керування станом застосунку" },
-  { name: "better-sqlite3", desc: "локальна база даних для швидкої роботи офлайн" },
+  {
+    name: "better-sqlite3",
+    desc: "локальна база даних для швидкої роботи офлайн",
+  },
   { name: "Supabase", desc: "синхронізація даних та realtime оновлення" },
   { name: "electron-builder", desc: "білд та автооновлення" },
   { name: "Lucide React", desc: "іконки" },

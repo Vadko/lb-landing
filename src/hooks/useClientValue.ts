@@ -13,7 +13,11 @@ const emptySubscribe = () => () => {};
  * browser APIs (like navigator, window, etc.).
  */
 export function useClientValue<T>(getClientValue: () => T, serverValue: T): T {
-  return useSyncExternalStore(emptySubscribe, getClientValue, () => serverValue);
+  return useSyncExternalStore(
+    emptySubscribe,
+    getClientValue,
+    () => serverValue
+  );
 }
 
 /**
