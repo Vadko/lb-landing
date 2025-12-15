@@ -1,18 +1,12 @@
-import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { NextResponse } from "next/server";
 import type { GitHubRelease } from "@/lib/types";
 
+export const runtime = "edge";
+
 const GITHUB_REPO = "Vadko/littlebit-launcher";
-const KV_KEY = "github-releases-data";
 const CACHE_TTL_SECONDS = 3600; // 1 година
 
-interface CachedData {
-  latest: GitHubRelease;
-  totalDownloads: number;
-  cachedAt: number;
-}
-
-async function fetchFromGitHub(): Promise<CachedData> {
+async function fetchFromGitHub() {
   const [latestResponse, allReleasesResponse] = await Promise.all([
     fetch(`https://api.github.com/repos/${GITHUB_REPO}/releases/latest`, {
       headers: { Accept: "application/vnd.github.v3+json" },
@@ -38,62 +32,43 @@ async function fetchFromGitHub(): Promise<CachedData> {
     }
   }
 
-  return {
-    latest,
-    totalDownloads,
-    cachedAt: Date.now(),
-  };
+  return { latest, totalDownloads };
 }
 
-function getKV(): CloudflareEnv["NEXT_CACHE_WORKERS_KV"] | null {
-  try {
-    const { env } = getCloudflareContext();
-    return env.NEXT_CACHE_WORKERS_KV ?? null;
-  } catch {
-    return null;
+export async function GET(request: Request) {
+  const cacheUrl = new URL(request.url);
+  const cacheKey = new Request(cacheUrl.toString());
+  const cache = caches.default;
+
+  // Перевіряємо кеш
+  const cachedResponse = await cache.match(cacheKey);
+  if (cachedResponse) {
+    return cachedResponse;
   }
-}
 
-export async function GET() {
   try {
-    const kv = getKV();
+    const data = await fetchFromGitHub();
 
-    // Спробувати отримати з KV
-    if (kv) {
-      const cached = await kv.get<CachedData>(KV_KEY, "json");
-
-      if (cached) {
-        const age = (Date.now() - cached.cachedAt) / 1000;
-        if (age < CACHE_TTL_SECONDS) {
-          return NextResponse.json({
-            latest: cached.latest,
-            totalDownloads: cached.totalDownloads,
-            cached: true,
-            age: Math.round(age),
-          });
-        }
-      }
-    }
-
-    // Фетчимо свіжі дані
-    const freshData = await fetchFromGitHub();
-
-    // Зберігаємо в KV якщо доступний
-    if (kv) {
-      await kv.put(KV_KEY, JSON.stringify(freshData), {
-        expirationTtl: CACHE_TTL_SECONDS,
-      });
-    }
-
-    return NextResponse.json({
-      latest: freshData.latest,
-      totalDownloads: freshData.totalDownloads,
-      cached: false,
+    const response = NextResponse.json({
+      latest: data.latest,
+      totalDownloads: data.totalDownloads,
     });
+
+    // Кешуємо відповідь
+    response.headers.set("Cache-Control", `public, max-age=${CACHE_TTL_SECONDS}`);
+
+    // Зберігаємо в Cloudflare Cache
+    const responseToCache = response.clone();
+    await cache.put(cacheKey, responseToCache);
+
+    return response;
   } catch (error) {
     console.error("GitHub releases API error:", error);
     return NextResponse.json(
-      { error: "Failed to fetch releases" },
+      {
+        error: "Failed to fetch releases",
+        message: error instanceof Error ? error.message : String(error),
+      },
       { status: 500 }
     );
   }
