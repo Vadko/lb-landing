@@ -1,6 +1,0 @@
-onlyBuiltDependencies:
-  - '@tsparticles/engine'
-  - esbuild
-  - sharp
-  - unrs-resolver
-  - workerd
