@@ -16,6 +16,7 @@ import {
 import {
   GameBanner,
   GameProgress,
+  FundraisingProgress,
   GameSidebar,
   GameFAQ,
   GameInstallSteps,
@@ -149,7 +150,13 @@ export default async function GameTranslationPage({ params }: PageProps) {
                   <span className={status.className}>{status.label}</span>
                 </div>
                 <p className="game-meta">
-                  Переклад від <strong>{game.team}</strong>
+                  Переклад від{" "}
+                  <Link
+                    href={`/games?team=${encodeURIComponent(game.team)}`}
+                    className="game-team-link"
+                  >
+                    {game.team}
+                  </Link>
                   {game.version && ` • Версія ${game.version}`}
                 </p>
               </header>
@@ -179,6 +186,11 @@ export default async function GameTranslationPage({ params }: PageProps) {
                 translationProgress={game.translation_progress}
                 editingProgress={game.editing_progress}
                 voiceProgress={game.voice_progress}
+              />
+
+              <FundraisingProgress
+                current={game.fundraising_current}
+                goal={game.fundraising_goal}
               />
 
               {game.description && (

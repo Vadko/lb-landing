@@ -7,6 +7,8 @@
 
     --accent-blue: #00C2FF;
     --accent-purple: #BD00FF;
+    --accent-pink: #FF4D8D;
+    --accent-green: #00D68F;
 
     --glass-bg: rgba(255, 255, 255, 0.03);
     --glass-border: rgba(255, 255, 255, 0.08);
@@ -27,6 +29,8 @@
 
     --accent-blue: #0095cc;
     --accent-purple: #9000cc;
+    --accent-pink: #E03B73;
+    --accent-green: #00B377;
 
     --glass-bg: rgba(255, 255, 255, 0.7);
     --glass-border: rgba(0, 0, 0, 0.08);
@@ -1606,8 +1610,6 @@ footer {
 
 .dropdown-trigger.open {
     border-color: var(--accent-blue);
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
 }
 
 .dropdown-trigger i:first-child {
@@ -1724,6 +1726,228 @@ footer {
 
 .light .dropdown-item.active {
     background: rgba(0, 149, 204, 0.15);
+}
+
+/* Scrollable Dropdown */
+.dropdown-menu-scrollable {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.dropdown-menu-scrollable::-webkit-scrollbar {
+    width: 6px;
+}
+
+.dropdown-menu-scrollable::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.dropdown-menu-scrollable::-webkit-scrollbar-thumb {
+    background: var(--glass-border);
+    border-radius: 3px;
+}
+
+.dropdown-menu-scrollable::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-blue);
+}
+
+.dropdown-loading {
+    display: flex;
+    justify-content: center;
+    padding: 16px;
+}
+
+.spinner-small {
+    width: 20px;
+    height: 20px;
+}
+
+.dropdown-trigger.has-value {
+    border-color: var(--accent-blue);
+    background: linear-gradient(135deg, rgba(0, 194, 255, 0.1), rgba(189, 0, 255, 0.1));
+}
+
+/* Wide Dropdown */
+.custom-dropdown-wide {
+    min-width: 220px;
+}
+
+.custom-dropdown-wide .dropdown-menu-with-search {
+    min-width: 350px;
+    right: 0;
+    left: auto;
+}
+
+/* Dropdown with Search */
+.dropdown-menu-with-search {
+    display: flex;
+    flex-direction: column;
+    max-height: 400px;
+    margin-top: 8px;
+    border-radius: 12px;
+    border-top: 1px solid var(--accent-blue);
+}
+
+.dropdown-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--glass-border);
+    position: relative;
+}
+
+.dropdown-search i:first-child {
+    color: var(--text-sec);
+    font-size: 0.85rem;
+}
+
+.dropdown-search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-family: inherit;
+    outline: none;
+}
+
+.dropdown-search-input::placeholder {
+    color: var(--text-sec);
+}
+
+.dropdown-search-clear {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 50%;
+    color: var(--text-sec);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.dropdown-search-clear:hover {
+    background: rgba(255, 77, 141, 0.3);
+    color: var(--accent-pink);
+}
+
+.dropdown-list {
+    flex: 1;
+    overflow-y: auto;
+    max-height: 280px;
+}
+
+.dropdown-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.dropdown-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.dropdown-list::-webkit-scrollbar-thumb {
+    background: var(--glass-border);
+    border-radius: 3px;
+}
+
+.dropdown-list::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-blue);
+}
+
+.dropdown-empty {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    color: var(--text-sec);
+    font-size: 0.9rem;
+}
+
+.dropdown-footer {
+    padding: 8px 14px;
+    border-top: 1px solid var(--glass-border);
+    font-size: 0.8rem;
+    color: var(--text-sec);
+    text-align: center;
+}
+
+/* Light theme dropdown search */
+.light .dropdown-search {
+    border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+.light .dropdown-search-input {
+    color: var(--text-primary);
+}
+
+.light .dropdown-search-clear {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.light .dropdown-search-clear:hover {
+    background: rgba(224, 59, 115, 0.2);
+}
+
+.light .dropdown-footer {
+    border-top-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Team Filter Chip */
+.team-filter-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, rgba(0, 194, 255, 0.15), rgba(189, 0, 255, 0.15));
+    border: 1px solid var(--accent-blue);
+    border-radius: 24px;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+}
+
+.team-filter-chip i:first-child {
+    color: var(--accent-blue);
+    font-size: 0.85rem;
+}
+
+.team-filter-chip span {
+    font-weight: 500;
+}
+
+.team-filter-clear {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 50%;
+    color: var(--text-sec);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.team-filter-clear:hover {
+    background: rgba(255, 77, 141, 0.3);
+    color: var(--accent-pink);
+}
+
+.light .team-filter-chip {
+    background: linear-gradient(135deg, rgba(0, 149, 204, 0.1), rgba(144, 0, 204, 0.1));
+}
+
+.light .team-filter-clear {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.light .team-filter-clear:hover {
+    background: rgba(224, 59, 115, 0.2);
 }
 
 /* Games Grid */
@@ -2067,6 +2291,18 @@ footer {
     color: var(--accent-blue);
 }
 
+.game-team-link {
+    color: var(--accent-blue);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.game-team-link:hover {
+    color: var(--accent-purple);
+    text-decoration: underline;
+}
+
 /* Game Status Badge */
 .game-status-badge {
     display: inline-flex;
@@ -2212,6 +2448,85 @@ footer {
     font-size: 0.9rem;
     margin-bottom: 8px;
     color: var(--text-sec);
+}
+
+/* Fundraising Progress */
+.game-fundraising h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.game-fundraising h2 i {
+    color: var(--accent-pink);
+}
+
+.fundraising-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.fundraising-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fundraising-amounts {
+    font-size: 1.1rem;
+}
+
+.fundraising-current {
+    font-weight: 600;
+    color: var(--text);
+}
+
+.fundraising-separator {
+    color: var(--text-sec);
+}
+
+.fundraising-goal {
+    color: var(--text-sec);
+}
+
+.fundraising-percentage {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--accent-pink);
+}
+
+.fundraising-percentage.completed {
+    color: var(--accent-green);
+}
+
+.fundraising-bar {
+    height: 10px;
+    border-radius: 5px;
+}
+
+.progress-bar-fill.fundraising-active {
+    background: linear-gradient(90deg, var(--accent-pink), var(--accent-purple));
+}
+
+.progress-bar-fill.fundraising-completed {
+    background: linear-gradient(90deg, var(--accent-green), var(--accent-blue));
+}
+
+.fundraising-message {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.fundraising-message.success {
+    color: var(--accent-green);
+}
+
+.fundraising-message i {
+    font-size: 1rem;
 }
 
 /* Game Translations Selection Page */

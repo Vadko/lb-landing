@@ -1,14 +1,38 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import { useGamesInfinite } from "@/hooks/useGames";
+import { useState, useCallback, useMemo } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
+import { useGamesInfinite, useTeams } from "@/hooks/useGames";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { GameCard } from "./GameCard";
 import { GamesSearch } from "./GamesSearch";
 
 export function GamesList() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("all");
+
+  // Fetch teams list
+  const { data: teams = [], isLoading: teamsLoading } = useTeams();
+
+  // Read team from URL params
+  const team = useMemo(() => {
+    const teamParam = searchParams.get("team");
+    return teamParam || undefined;
+  }, [searchParams]);
+
+  const handleTeamChange = useCallback(
+    (newTeam: string | undefined) => {
+      if (newTeam) {
+        router.push(`/games?team=${encodeURIComponent(newTeam)}`);
+      } else {
+        router.push("/games");
+      }
+    },
+    [router]
+  );
 
   const {
     data,
@@ -17,7 +41,7 @@ export function GamesList() {
     hasNextPage,
     fetchNextPage,
     error,
-  } = useGamesInfinite(search, status);
+  } = useGamesInfinite(search, status, team);
 
   const handleLoadMore = useCallback(() => {
     if (hasNextPage && !isFetchingNextPage) {
@@ -41,6 +65,10 @@ export function GamesList() {
         onChange={setSearch}
         status={status}
         onStatusChange={setStatus}
+        team={team}
+        onTeamChange={handleTeamChange}
+        teams={teams}
+        teamsLoading={teamsLoading}
       />
 
       {!isLoading && (
