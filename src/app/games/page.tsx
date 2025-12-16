@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { GamesList } from "@/components/games/GamesList";
 
 export const metadata: Metadata = {
@@ -31,7 +32,15 @@ export default function GamesPage() {
           </p>
         </div>
 
-        <GamesList />
+        <Suspense
+          fallback={
+            <div className="loading-spinner">
+              <div className="spinner" />
+            </div>
+          }
+        >
+          <GamesList />
+        </Suspense>
       </div>
     </section>
   );
