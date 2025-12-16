@@ -48,7 +48,9 @@ export async function generateMetadata({
     openGraph: {
       title: `${game.name} українською | LB Launcher`,
       description,
-      images: game.banner_path ? [getImageUrl(game.banner_path)!] : undefined,
+      images: game.banner_path
+        ? [getImageUrl(game.banner_path, game.updated_at)!]
+        : undefined,
       type: "article",
       locale: "uk_UA",
     },
@@ -56,7 +58,9 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: `${game.name} українською`,
       description,
-      images: game.banner_path ? [getImageUrl(game.banner_path)!] : undefined,
+      images: game.banner_path
+        ? [getImageUrl(game.banner_path, game.updated_at)!]
+        : undefined,
     },
     alternates: {
       canonical: `https://lblauncher.com/games/${slug}`,
@@ -81,8 +85,8 @@ export default async function GamePage({ params }: PageProps) {
 
   // Multiple translations - show selection page
   const game = translations[0]; // Use first translation for banner/name
-  const bannerUrl = getImageUrl(game.banner_path);
-  const logoUrl = getImageUrl(game.logo_path);
+  const bannerUrl = getImageUrl(game.banner_path, game.updated_at);
+  const logoUrl = getImageUrl(game.logo_path, game.updated_at);
 
   return (
     <article className="game-detail">

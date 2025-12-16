@@ -4,7 +4,8 @@
   "compatibility_date": "2024-12-01",
   "compatibility_flags": ["nodejs_compat"],
   "kv_namespaces": [
-    { "binding": "NEXT_CACHE_WORKERS_KV", "id": "3fa9f4b6128e47ac8561366c9e22cb95" }
+    { "binding": "NEXT_CACHE_WORKERS_KV", "id": "3fa9f4b6128e47ac8561366c9e22cb95" },
+    { "binding": "GITHUB_CACHE_KV", "id": "289b918444714675a56b1173a9f73a84" }
   ],
   "main": ".open-next/worker.js",
   "assets": {

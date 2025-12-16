@@ -50,7 +50,8 @@ function TranslationRow({ translation, slug }: { translation: TranslationItem; s
 
 export function GameCard({ game }: GameCardProps) {
   const imageUrl =
-    getImageUrl(game.banner_path) || getImageUrl(game.thumbnail_path);
+    getImageUrl(game.banner_path, game.updated_at) ||
+    getImageUrl(game.thumbnail_path, game.updated_at);
 
   // For single translation, link directly to the translation page
   const cardHref = game.translations.length === 1

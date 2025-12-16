@@ -74,7 +74,9 @@ export async function generateMetadata({
     openGraph: {
       title: `${game.name} українською від ${game.team} | LB Launcher`,
       description,
-      images: game.banner_path ? [getImageUrl(game.banner_path)!] : undefined,
+      images: game.banner_path
+        ? [getImageUrl(game.banner_path, game.updated_at)!]
+        : undefined,
       type: "article",
       locale: "uk_UA",
     },
@@ -82,7 +84,9 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: `${game.name} українською від ${game.team}`,
       description,
-      images: game.banner_path ? [getImageUrl(game.banner_path)!] : undefined,
+      images: game.banner_path
+        ? [getImageUrl(game.banner_path, game.updated_at)!]
+        : undefined,
     },
     alternates: {
       canonical: `https://lblauncher.com/games/${slug}/${encodeURIComponent(game.team)}`,
@@ -105,8 +109,8 @@ export default async function GameTranslationPage({ params }: PageProps) {
   const otherTranslations = allTranslations.filter((t) => t.team !== game.team);
 
   const status = STATUS_LABELS[game.status] || STATUS_LABELS.planned;
-  const bannerUrl = getImageUrl(game.banner_path);
-  const logoUrl = getImageUrl(game.logo_path);
+  const bannerUrl = getImageUrl(game.banner_path, game.updated_at);
+  const logoUrl = getImageUrl(game.logo_path, game.updated_at);
 
   const breadcrumbItems = [
     { name: "Головна", url: "https://lblauncher.com" },

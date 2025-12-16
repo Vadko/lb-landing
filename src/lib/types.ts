@@ -2,8 +2,6 @@ import type { Database } from "./database.types";
 
 export type Game = Database["public"]["Tables"]["games"]["Row"];
 
-export type GameStatus = Database["public"]["Enums"]["game_status"];
-
 // Translation item for grouped games
 export type TranslationItem = Pick<
   Game,
@@ -12,6 +10,7 @@ export type TranslationItem = Pick<
   | "status"
   | "translation_progress"
   | "version"
+  | "banner_path"
   | "updated_at"
 >;
 
@@ -22,6 +21,7 @@ export interface GameGroup {
   banner_path: string | null;
   thumbnail_path: string | null;
   is_adult: boolean;
+  updated_at: string;
   translations: TranslationItem[];
 }
 
