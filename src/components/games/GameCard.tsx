@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { GameGroup, TranslationItem } from "@/lib/types";
 import { getImageUrl } from "@/lib/images";
+import { teamToSlug } from "@/lib/transliterate";
 
 interface GameCardProps {
   game: GameGroup;
@@ -24,7 +25,7 @@ function TranslationRow({ translation, slug }: { translation: TranslationItem; s
 
   return (
     <Link
-      href={`/games/${slug}/${encodeURIComponent(translation.team)}`}
+      href={`/games/${slug}/${teamToSlug(translation.team)}`}
       className="game-card-translation"
     >
       <span className="game-card-translation-team">{translation.team}</span>
@@ -55,7 +56,7 @@ export function GameCard({ game }: GameCardProps) {
 
   // For single translation, link directly to the translation page
   const cardHref = game.translations.length === 1
-    ? `/games/${game.slug}/${encodeURIComponent(game.translations[0].team)}`
+    ? `/games/${game.slug}/${teamToSlug(game.translations[0].team)}`
     : `/games/${game.slug}`;
 
   return (

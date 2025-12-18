@@ -3,9 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { getGamesBySlug, getAllGameSlugs } from "@/lib/games";
+import { teamToSlug } from "@/lib/transliterate";
 import { getImageUrl } from "@/lib/images";
 import { STATUS_LABELS } from "@/lib/constants";
 import { generateBreadcrumbLD } from "@/lib/game-jsonld";
+import { GameBanner } from "@/components/game-detail";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -80,7 +82,7 @@ export default async function GamePage({ params }: PageProps) {
 
   // If only one translation, redirect to the specific translation page
   if (translations.length === 1) {
-    redirect(`/games/${slug}/${encodeURIComponent(translations[0].team)}`);
+    redirect(`/games/${slug}/${teamToSlug(translations[0].team)}`);
   }
 
   // Multiple translations - show selection page
@@ -90,38 +92,7 @@ export default async function GamePage({ params }: PageProps) {
 
   return (
     <article className="game-detail">
-      {/* Hero Banner */}
-      <div className="game-banner">
-        {bannerUrl ? (
-          <Image
-            src={bannerUrl}
-            alt={`${game.name} — український переклад`}
-            fill
-            className="object-cover"
-            priority
-          />
-        ) : (
-          <div className="game-banner-placeholder" />
-        )}
-        <div className="game-banner-overlay" />
-
-        {logoUrl && (
-          <Image
-            src={logoUrl}
-            alt={game.name}
-            width={400}
-            height={200}
-            className="game-banner-logo"
-            style={{
-              objectFit: "contain",
-              width: "auto",
-              height: "auto",
-              maxHeight: "150px",
-              maxWidth: "400px",
-            }}
-          />
-        )}
-      </div>
+      <GameBanner bannerUrl={bannerUrl} logoUrl={logoUrl} name={game.name} />
 
       <div className="game-content">
         <div className="container">
@@ -152,7 +123,7 @@ export default async function GamePage({ params }: PageProps) {
                 return (
                   <Link
                     key={translation.id}
-                    href={`/games/${slug}/${encodeURIComponent(translation.team)}`}
+                    href={`/games/${slug}/${teamToSlug(translation.team)}`}
                     className="game-translation-card"
                   >
                     <div className="game-translation-card-image">

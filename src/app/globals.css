@@ -2174,13 +2174,14 @@ footer {
 
 /* Game Detail Page */
 .game-detail {
-    padding-top: 80px;
+    padding-top: 0;
 }
 
 .game-banner {
     position: relative;
     height: 300px;
     overflow: hidden;
+    margin-top: 77px;
 }
 
 @media (min-width: 768px) {

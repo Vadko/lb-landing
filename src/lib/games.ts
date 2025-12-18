@@ -1,5 +1,6 @@
 import { createServerClient } from "@/lib/supabase/server";
 import type { Game } from "@/lib/types";
+import { teamToSlug } from "@/lib/transliterate";
 
 // Get all translations for a specific game slug
 export async function getGamesBySlug(slug: string): Promise<Game[]> {
@@ -19,26 +20,27 @@ export async function getGamesBySlug(slug: string): Promise<Game[]> {
   return data;
 }
 
-// Get a specific translation by slug and team
-export async function getGameBySlugAndTeam(
+// Get a specific translation by slug and team slug (transliterated)
+export async function getGameBySlugAndTeamSlug(
   slug: string,
-  team: string
+  teamSlug: string
 ): Promise<Game | null> {
   const supabase = createServerClient();
 
+  // Get all games with this slug and find matching team by transliterated slug
   const { data, error } = await supabase
     .from("games")
     .select("*")
     .eq("slug", slug)
-    .eq("team", team)
-    .eq("approved", true)
-    .single();
+    .eq("approved", true);
 
-  if (error) {
+  if (error || !data) {
     return null;
   }
 
-  return data;
+  // Find the game where team slug matches
+  const game = data.find((g) => teamToSlug(g.team) === teamSlug);
+  return game || null;
 }
 
 // Get unique game slugs (for generating static paths)
@@ -59,9 +61,9 @@ export async function getAllGameSlugs(): Promise<string[]> {
   return uniqueSlugs;
 }
 
-// Get all slug+team combinations (for sitemap)
+// Get all slug+teamSlug combinations (for static paths)
 export async function getAllGameSlugsWithTeams(): Promise<
-  { slug: string; team: string }[]
+  { slug: string; teamSlug: string }[]
 > {
   const supabase = createServerClient();
 
@@ -74,5 +76,8 @@ export async function getAllGameSlugsWithTeams(): Promise<
     return [];
   }
 
-  return data;
+  return data.map((g) => ({
+    slug: g.slug,
+    teamSlug: teamToSlug(g.team),
+  }));
 }

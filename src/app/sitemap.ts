@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { createServerClient } from "@/lib/supabase/server";
+import { teamToSlug } from "@/lib/transliterate";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const supabase = createServerClient();
@@ -40,7 +41,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Add individual translation pages
     for (const translation of translations) {
       gameUrls.push({
-        url: `https://lblauncher.com/games/${slug}/${encodeURIComponent(translation.team)}`,
+        url: `https://lblauncher.com/games/${slug}/${teamToSlug(translation.team)}`,
         lastModified: new Date(translation.updated_at),
         changeFrequency: "weekly",
         priority: 0.6,
