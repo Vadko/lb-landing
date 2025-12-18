@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
-  getGameBySlugAndTeam,
+  getGameBySlugAndTeamSlug,
   getAllGameSlugsWithTeams,
   getGamesBySlug,
 } from "@/lib/games";
+import { teamToSlug } from "@/lib/transliterate";
 import { getImageUrl } from "@/lib/images";
 import { STATUS_LABELS } from "@/lib/constants";
 import {
@@ -28,18 +29,17 @@ interface PageProps {
 
 export async function generateStaticParams() {
   const slugsWithTeams = await getAllGameSlugsWithTeams();
-  return slugsWithTeams.map(({ slug, team }) => ({
+  return slugsWithTeams.map(({ slug, teamSlug }) => ({
     slug,
-    team: encodeURIComponent(team),
+    team: teamSlug,
   }));
 }
 
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const { slug, team } = await params;
-  const decodedTeam = decodeURIComponent(team);
-  const game = await getGameBySlugAndTeam(slug, decodedTeam);
+  const { slug, team: teamSlugParam } = await params;
+  const game = await getGameBySlugAndTeamSlug(slug, teamSlugParam);
 
   if (!game) {
     return { title: "Переклад не знайдено" };
@@ -89,7 +89,7 @@ export async function generateMetadata({
         : undefined,
     },
     alternates: {
-      canonical: `https://lblauncher.com/games/${slug}/${encodeURIComponent(game.team)}`,
+      canonical: `https://lblauncher.com/games/${slug}/${teamToSlug(game.team)}`,
     },
   };
 }
@@ -97,9 +97,8 @@ export async function generateMetadata({
 export const revalidate = 3600;
 
 export default async function GameTranslationPage({ params }: PageProps) {
-  const { slug, team } = await params;
-  const decodedTeam = decodeURIComponent(team);
-  const game = await getGameBySlugAndTeam(slug, decodedTeam);
+  const { slug, team: teamSlugParam } = await params;
+  const game = await getGameBySlugAndTeamSlug(slug, teamSlugParam);
 
   if (!game) {
     notFound();
@@ -118,7 +117,7 @@ export default async function GameTranslationPage({ params }: PageProps) {
     { name: game.name, url: `https://lblauncher.com/games/${slug}` },
     {
       name: game.team,
-      url: `https://lblauncher.com/games/${slug}/${encodeURIComponent(game.team)}`,
+      url: `https://lblauncher.com/games/${slug}/${teamToSlug(game.team)}`,
     },
   ];
 
@@ -173,7 +172,7 @@ export default async function GameTranslationPage({ params }: PageProps) {
                     {otherTranslations.map((t) => (
                       <Link
                         key={t.id}
-                        href={`/games/${slug}/${encodeURIComponent(t.team)}`}
+                        href={`/games/${slug}/${teamToSlug(t.team)}`}
                         className="game-translation-link"
                       >
                         <span className="game-translation-team">{t.team}</span>
