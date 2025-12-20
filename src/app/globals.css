@@ -2909,6 +2909,30 @@ footer {
     color: white;
 }
 
+.btn-launcher {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 12px;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+    color: white;
+    font-weight: 600;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.btn-launcher:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(189, 0, 255, 0.3);
+}
+
+.light .btn-launcher {
+    color: white;
+}
+
 .game-social-links {
     display: flex;
     gap: 10px;

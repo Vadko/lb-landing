@@ -30,6 +30,15 @@ export function GameSidebar({ game }: GameSidebarProps) {
             <small>Windows / macOS / Linux</small>
           </div>
         </Link>
+        {game.slug && game.team && (
+          <a
+            href={`littlebit://games/${game.slug}/${encodeURIComponent(game.team)}`}
+            className="btn-launcher"
+          >
+            <i className="fa-solid fa-rocket" />
+            Відкрити в лаунчері
+          </a>
+        )}
       </div>
 
       {/* Steam Link */}
