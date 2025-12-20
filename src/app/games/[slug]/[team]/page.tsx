@@ -189,6 +189,8 @@ export default async function GameTranslationPage({ params }: PageProps) {
                 translationProgress={game.translation_progress}
                 editingProgress={game.editing_progress}
                 voiceProgress={game.voice_progress}
+                fontsProgress={game.fonts_progress}
+                texturesProgress={game.textures_progress}
               />
 
               <FundraisingProgress

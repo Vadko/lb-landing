@@ -2,12 +2,16 @@ interface GameProgressProps {
   translationProgress: number;
   editingProgress: number;
   voiceProgress?: number | null;
+  fontsProgress?: number | null;
+  texturesProgress?: number | null;
 }
 
 export function GameProgress({
   translationProgress,
   editingProgress,
   voiceProgress,
+  fontsProgress,
+  texturesProgress,
 }: GameProgressProps) {
   return (
     <section className="game-section">
@@ -26,7 +30,7 @@ export function GameProgress({
           </div>
         </div>
 
-        {editingProgress > 0 && (
+        {editingProgress != null && (
           <div className="game-progress-item">
             <div className="game-progress-header">
               <span>Редагування</span>
@@ -41,7 +45,7 @@ export function GameProgress({
           </div>
         )}
 
-        {voiceProgress && voiceProgress > 0 && (
+        {voiceProgress != null && (
           <div className="game-progress-item">
             <div className="game-progress-header">
               <span>Озвучення</span>
@@ -51,6 +55,36 @@ export function GameProgress({
               <div
                 className="progress-bar-fill"
                 style={{ width: `${voiceProgress}%` }}
+              />
+            </div>
+          </div>
+        )}
+
+        {fontsProgress != null && (
+          <div className="game-progress-item">
+            <div className="game-progress-header">
+              <span>Шрифти</span>
+              <span>{fontsProgress}%</span>
+            </div>
+            <div className="progress-bar">
+              <div
+                className="progress-bar-fill"
+                style={{ width: `${fontsProgress}%` }}
+              />
+            </div>
+          </div>
+        )}
+
+        {texturesProgress != null && (
+          <div className="game-progress-item">
+            <div className="game-progress-header">
+              <span>Текстури</span>
+              <span>{texturesProgress}%</span>
+            </div>
+            <div className="progress-bar">
+              <div
+                className="progress-bar-fill"
+                style={{ width: `${texturesProgress}%` }}
               />
             </div>
           </div>

@@ -1583,7 +1583,8 @@ footer {
 /* Custom Dropdown */
 .custom-dropdown {
     position: relative;
-    min-width: 180px;
+    width: 200px;
+    min-width: 200px;
 }
 
 .dropdown-trigger {
@@ -1636,7 +1637,7 @@ footer {
     position: absolute;
     top: 100%;
     left: 0;
-    right: 0;
+    min-width: 100%;
     background: rgba(15, 23, 42, 0.98);
     border: 1px solid var(--accent-blue);
     border-top: none;
@@ -1702,6 +1703,75 @@ footer {
 .dropdown-item i:last-child {
     color: var(--accent-blue);
     font-size: 0.8rem;
+}
+
+/* Checkbox styles for multi-select dropdowns */
+.dropdown-item-checkbox {
+    gap: 8px;
+    min-width: 220px;
+}
+
+.dropdown-item-checkbox span.checkbox {
+    width: 18px !important;
+    height: 18px !important;
+    min-width: 18px !important;
+    max-width: 18px !important;
+    flex: 0 0 18px !important;
+    border: 2px solid var(--text-sec);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    background: transparent;
+}
+
+.dropdown-item-checkbox span.checkbox i {
+    font-size: 10px;
+    color: white;
+    width: auto !important;
+}
+
+.dropdown-item-checkbox span.checkbox.checked {
+    background: var(--accent-blue);
+    border-color: var(--accent-blue);
+}
+
+.dropdown-item-checkbox:hover span.checkbox {
+    border-color: var(--accent-blue);
+}
+
+.dropdown-item-clear {
+    color: var(--text-sec);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 4px;
+    padding-bottom: 10px;
+}
+
+.dropdown-item-clear:hover {
+    color: #ff6b6b;
+}
+
+.dropdown-item-clear i {
+    color: inherit !important;
+}
+
+/* Light theme checkbox */
+.light .dropdown-item-checkbox span.checkbox {
+    border-color: rgba(0, 0, 0, 0.3);
+}
+
+.light .dropdown-item-checkbox span.checkbox.checked {
+    background: var(--accent-blue);
+    border-color: var(--accent-blue);
+}
+
+.light .dropdown-item-checkbox span.checkbox.checked i {
+    color: white;
+}
+
+.light .dropdown-item-clear {
+    border-bottom-color: rgba(0, 0, 0, 0.1);
 }
 
 /* Light theme dropdown */
@@ -1947,6 +2017,80 @@ footer {
 }
 
 .light .team-filter-clear:hover {
+    background: rgba(224, 59, 115, 0.2);
+}
+
+/* Games Filters Wrapper */
+.games-filters-wrapper {
+    margin-bottom: 24px;
+}
+
+.games-filters-wrapper .games-filters {
+    margin-bottom: 0;
+}
+
+/* Multi-select Filter Chips */
+.filters-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.filter-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    background: rgba(0, 194, 255, 0.15);
+    border: 1px solid rgba(0, 194, 255, 0.3);
+    border-radius: 16px;
+    color: var(--text-primary);
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.filter-chip-author {
+    background: rgba(189, 0, 255, 0.15);
+    border-color: rgba(189, 0, 255, 0.3);
+}
+
+.filter-chip-remove {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 50%;
+    color: var(--text-sec);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 10px;
+}
+
+.filter-chip-remove:hover {
+    background: rgba(255, 77, 141, 0.3);
+    color: var(--accent-pink);
+}
+
+.light .filter-chip {
+    background: rgba(0, 149, 204, 0.1);
+    border-color: rgba(0, 149, 204, 0.2);
+}
+
+.light .filter-chip-author {
+    background: rgba(144, 0, 204, 0.1);
+    border-color: rgba(144, 0, 204, 0.2);
+}
+
+.light .filter-chip-remove {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.light .filter-chip-remove:hover {
     background: rgba(224, 59, 115, 0.2);
 }
 

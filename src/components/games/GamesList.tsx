@@ -12,26 +12,59 @@ export function GamesList() {
   const router = useRouter();
 
   const [search, setSearch] = useState("");
-  const [status, setStatus] = useState("all");
 
-  // Fetch teams list
-  const { data: teams = [], isLoading: teamsLoading } = useTeams();
+  // Fetch authors list (renamed from teams for clarity)
+  const { data: authors = [], isLoading: authorsLoading } = useTeams();
 
-  // Read team from URL params
-  const team = useMemo(() => {
-    const teamParam = searchParams.get("team");
-    return teamParam || undefined;
+  // Read selected statuses from URL params (comma-separated)
+  const selectedStatuses = useMemo(() => {
+    const statusesParam = searchParams.get("statuses");
+    if (!statusesParam) return [];
+    return statusesParam.split(",").filter(Boolean);
   }, [searchParams]);
 
-  const handleTeamChange = useCallback(
-    (newTeam: string | undefined) => {
-      if (newTeam) {
-        router.push(`/games?team=${encodeURIComponent(newTeam)}`);
-      } else {
-        router.push("/games");
+  // Read selected authors from URL params (comma-separated)
+  const selectedAuthors = useMemo(() => {
+    const authorsParam = searchParams.get("authors");
+    // Support old 'team' param for backward compatibility
+    const teamParam = searchParams.get("team");
+    if (authorsParam) {
+      return authorsParam.split(",").filter(Boolean);
+    }
+    if (teamParam) {
+      return [teamParam];
+    }
+    return [];
+  }, [searchParams]);
+
+  // Update URL with new filter values
+  const updateFilters = useCallback(
+    (newStatuses: string[], newAuthors: string[]) => {
+      const params = new URLSearchParams();
+      if (newStatuses.length > 0) {
+        params.set("statuses", newStatuses.join(","));
       }
+      if (newAuthors.length > 0) {
+        params.set("authors", newAuthors.join(","));
+      }
+      const queryString = params.toString();
+      router.push(queryString ? `/games?${queryString}` : "/games");
     },
     [router]
+  );
+
+  const handleStatusesChange = useCallback(
+    (newStatuses: string[]) => {
+      updateFilters(newStatuses, selectedAuthors);
+    },
+    [updateFilters, selectedAuthors]
+  );
+
+  const handleAuthorsChange = useCallback(
+    (newAuthors: string[]) => {
+      updateFilters(selectedStatuses, newAuthors);
+    },
+    [updateFilters, selectedStatuses]
   );
 
   const {
@@ -41,7 +74,7 @@ export function GamesList() {
     hasNextPage,
     fetchNextPage,
     error,
-  } = useGamesInfinite(search, status, team);
+  } = useGamesInfinite(search, selectedStatuses, selectedAuthors);
 
   const handleLoadMore = useCallback(() => {
     if (hasNextPage && !isFetchingNextPage) {
@@ -63,12 +96,12 @@ export function GamesList() {
       <GamesSearch
         value={search}
         onChange={setSearch}
-        status={status}
-        onStatusChange={setStatus}
-        team={team}
-        onTeamChange={handleTeamChange}
-        teams={teams}
-        teamsLoading={teamsLoading}
+        selectedStatuses={selectedStatuses}
+        onStatusesChange={handleStatusesChange}
+        selectedAuthors={selectedAuthors}
+        onAuthorsChange={handleAuthorsChange}
+        authors={authors}
+        authorsLoading={authorsLoading}
       />
 
       {!isLoading && (
@@ -96,15 +129,17 @@ export function GamesList() {
       ) : (
         <>
           <div className="games-grid">
-            {allGames.map((game, index) => (
+            {allGames.map((game) => (
               <div key={game.slug} className="game-card-wrapper">
                 <GameCard game={game} />
-                {hasNextPage && index === allGames.length - 5 && (
-                  <div ref={observerTarget} style={{ height: 0 }} />
-                )}
               </div>
             ))}
           </div>
+
+          {/* Observer for infinite scroll - always at the end */}
+          {hasNextPage && (
+            <div ref={observerTarget} style={{ height: 1 }} />
+          )}
 
           {isFetchingNextPage && (
             <div className="loading-spinner">

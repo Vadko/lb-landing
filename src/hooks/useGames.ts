@@ -18,8 +18,8 @@ interface FetchGamesParams {
   offset: number;
   limit: number;
   search?: string;
-  status?: string;
-  team?: string;
+  statuses?: string[];
+  authors?: string[];
 }
 
 // Type guard to check if row has required non-null fields
@@ -57,17 +57,24 @@ function mapRowToGameGroup(row: GamesGroupedRow & { slug: string; name: string }
   };
 }
 
+// Check if we have active filters
+function hasActiveFilters(statuses?: string[], authors?: string[]): boolean {
+  const hasStatuses = statuses && statuses.length > 0;
+  const hasAuthors = authors && authors.length > 0;
+  return Boolean(hasStatuses || hasAuthors);
+}
+
 // Paginated fetch using games_grouped view
 async function fetchGamesGrouped({
   offset,
   limit,
   search,
-  status,
-  team,
+  statuses,
+  authors,
 }: FetchGamesParams): Promise<GamesGroupedResponse> {
-  // If filtering by status or team, we need to filter by checking translations JSON
-  if ((status && status !== "all") || team) {
-    return fetchGamesGroupedWithFilter({ offset, limit, search, status, team });
+  // If filtering by statuses or authors, we need to filter by checking translations JSON
+  if (hasActiveFilters(statuses, authors)) {
+    return fetchGamesGroupedWithFilter({ offset, limit, search, statuses, authors });
   }
 
   let query = supabase
@@ -103,8 +110,8 @@ async function fetchGamesGroupedWithFilter({
   offset,
   limit,
   search,
-  status,
-  team,
+  statuses,
+  authors,
 }: FetchGamesParams): Promise<GamesGroupedResponse> {
   let query = supabase
     .from("games_grouped")
@@ -125,16 +132,20 @@ async function fetchGamesGroupedWithFilter({
   const filteredGroups = (data ?? []).filter(isValidGameRow).filter((row) => {
     const translations = parseTranslations(row.translations);
 
-    // Filter by status if specified
-    if (status && status !== "all") {
-      if (!translations.some((t) => t.status === status)) {
+    // Filter by statuses - game matches if ANY translation has one of selected statuses
+    if (statuses && statuses.length > 0) {
+      if (!translations.some((t) => statuses.includes(t.status))) {
         return false;
       }
     }
 
-    // Filter by team if specified (partial match - "Team A" matches "Team A & Team B")
-    if (team) {
-      if (!translations.some((t) => t.team?.includes(team))) {
+    // Filter by authors - game matches if ANY translation has one of selected authors
+    // Uses partial match to handle comma-separated team field (e.g., "Author A, Author B")
+    if (authors && authors.length > 0) {
+      const matchesAuthor = translations.some((t) =>
+        authors.some((author) => t.team?.includes(author))
+      );
+      if (!matchesAuthor) {
         return false;
       }
     }
@@ -155,16 +166,20 @@ async function fetchGamesGroupedWithFilter({
   };
 }
 
-export function useGamesInfinite(search?: string, status?: string, team?: string) {
+export function useGamesInfinite(
+  search?: string,
+  statuses?: string[],
+  authors?: string[]
+) {
   return useInfiniteQuery({
-    queryKey: queryKeys.games.list({ search, status, team }),
+    queryKey: queryKeys.games.list({ search, statuses, authors }),
     queryFn: ({ pageParam = 0 }) =>
       fetchGamesGrouped({
         offset: pageParam,
         limit: GAMES_PER_PAGE,
         search,
-        status,
-        team,
+        statuses,
+        authors,
       }),
     initialPageParam: 0,
     getNextPageParam: (lastPage) =>
@@ -189,9 +204,11 @@ export function useGamesCount() {
   });
 }
 
+// Fetch unique authors from games' team field
+// Parses comma-separated teams into individual authors
 export function useTeams() {
   return useQuery({
-    queryKey: queryKeys.games.teams(),
+    queryKey: queryKeys.games.authors(),
     queryFn: async () => {
       const { data, error } = await supabase
         .from("games")
@@ -202,12 +219,20 @@ export function useTeams() {
         throw new Error(error.message);
       }
 
-      // Get unique teams and sort alphabetically
-      const uniqueTeams = [...new Set(data.map((row) => row.team))].sort(
-        (a, b) => a.localeCompare(b, "uk")
+      // Parse comma-separated team field into individual authors
+      const allAuthors = data
+        .flatMap((row) => {
+          if (!row.team) return [];
+          return row.team.split(",").map((author) => author.trim());
+        })
+        .filter((author) => author.length > 0);
+
+      // Get unique authors and sort alphabetically
+      const uniqueAuthors = [...new Set(allAuthors)].sort((a, b) =>
+        a.localeCompare(b, "uk")
       );
 
-      return uniqueTeams;
+      return uniqueAuthors;
     },
     staleTime: 1000 * 60 * 10, // Cache for 10 minutes
   });
