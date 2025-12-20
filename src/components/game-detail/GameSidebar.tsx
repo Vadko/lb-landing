@@ -119,7 +119,7 @@ export function GameSidebar({ game }: GameSidebarProps) {
       {/* Support */}
       {game.support_url && (
         <div className="game-sidebar-card">
-          <h3>Підтримати команду</h3>
+          <h3>Підтримати</h3>
           <a
             href={game.support_url}
             target="_blank"
@@ -127,7 +127,7 @@ export function GameSidebar({ game }: GameSidebarProps) {
             className="btn-support"
           >
             <i className="fa-solid fa-heart" />
-            Підтримати
+            Підтримати переклад
           </a>
         </div>
       )}

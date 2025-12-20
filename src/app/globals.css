@@ -428,6 +428,30 @@ a { text-decoration: none; color: white; transition: 0.3s; }
     box-shadow: 0 8px 30px rgba(144, 0, 204, 0.15);
 }
 
+/* Instruction Link */
+.instruction-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 15px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+.instruction-link:hover {
+    color: var(--accent-blue);
+}
+.instruction-link i {
+    font-size: 0.85rem;
+}
+.light .instruction-link {
+    color: rgba(0, 0, 0, 0.5);
+}
+.light .instruction-link:hover {
+    color: var(--accent-blue);
+}
+
 /* Download Buttons Styling */
 .download-row {
     margin-top: 20px;

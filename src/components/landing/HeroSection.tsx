@@ -96,6 +96,12 @@ export function HeroSection() {
     return "fa-windows";
   };
 
+  const getInstructionUrl = () => {
+    if (os === "macos") return "https://github.com/Vadko/littlebit-launcher#macos";
+    if (os === "linux") return "https://github.com/Vadko/littlebit-launcher#linux";
+    return "https://github.com/Vadko/littlebit-launcher#windows";
+  };
+
   const versionText = isReleaseLoading
     ? "Завантаження..."
     : downloadLinks.version && downloadLinks.publishedAt
@@ -174,6 +180,16 @@ export function HeroSection() {
               )}
             </div>
           </div>
+
+          <a
+            href={getInstructionUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="instruction-link"
+          >
+            <i className="fa-solid fa-book" />
+            <span>Інструкція з встановлення</span>
+          </a>
 
           <div className="stats-mini">
             <div>
