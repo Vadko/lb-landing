@@ -33,7 +33,7 @@ export function GameProgress({
         {editingProgress != null && (
           <div className="game-progress-item">
             <div className="game-progress-header">
-              <span>Редагування</span>
+              <span>Редактура</span>
               <span>{editingProgress}%</span>
             </div>
             <div className="progress-bar">
