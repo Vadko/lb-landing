@@ -185,158 +185,160 @@ export function GamesSearch({
         </div>
 
         {/* Status Multi-Select Dropdown */}
-      <div className="custom-dropdown" ref={statusDropdownRef}>
-        <button
-          type="button"
-          className={`dropdown-trigger ${isStatusOpen ? "open" : ""} ${selectedStatuses.length > 0 ? "has-value" : ""}`}
-          onClick={() => setIsStatusOpen(!isStatusOpen)}
-        >
-          <i className="fa-solid fa-gamepad" />
-          <span>{statusLabel}</span>
-          <i
-            className={`fa-solid fa-chevron-down dropdown-arrow ${isStatusOpen ? "rotated" : ""}`}
-          />
-        </button>
+        <div className="custom-dropdown" ref={statusDropdownRef}>
+          <button
+            type="button"
+            className={`dropdown-trigger ${isStatusOpen ? "open" : ""} ${selectedStatuses.length > 0 ? "has-value" : ""}`}
+            onClick={() => setIsStatusOpen(!isStatusOpen)}
+          >
+            <i className="fa-solid fa-gamepad" />
+            <span>{statusLabel}</span>
+            <i
+              className={`fa-solid fa-chevron-down dropdown-arrow ${isStatusOpen ? "rotated" : ""}`}
+            />
+          </button>
 
-        {isStatusOpen && (
-          <div className="dropdown-menu">
-            {/* Clear selection */}
-            {selectedStatuses.length > 0 && (
-              <button
-                type="button"
-                className="dropdown-item dropdown-item-clear"
-                onClick={handleClearStatuses}
-              >
-                <i className="fa-solid fa-xmark" />
-                <span>Очистити фільтр</span>
-              </button>
-            )}
-            {STATUS_OPTIONS.map((option) => {
-              const isSelected = selectedStatuses.includes(option.value);
-              return (
-                <button
-                  key={option.value}
-                  type="button"
-                  className={`dropdown-item dropdown-item-checkbox ${isSelected ? "active" : ""}`}
-                  onClick={() => handleStatusToggle(option.value)}
-                >
-                  <span className={`checkbox ${isSelected ? "checked" : ""}`}>
-                    {isSelected && <i className="fa-solid fa-check" />}
-                  </span>
-                  <i className={option.icon} />
-                  <span>{option.label}</span>
-                </button>
-              );
-            })}
-          </div>
-        )}
-      </div>
-
-      {/* Author Multi-Select Dropdown */}
-      <div className="custom-dropdown custom-dropdown-wide" ref={authorDropdownRef}>
-        <button
-          type="button"
-          className={`dropdown-trigger ${isAuthorOpen ? "open" : ""} ${selectedAuthors.length > 0 ? "has-value" : ""}`}
-          onClick={handleAuthorDropdownToggle}
-        >
-          <i className="fa-solid fa-user" />
-          <span>{authorLabel}</span>
-          <i
-            className={`fa-solid fa-chevron-down dropdown-arrow ${isAuthorOpen ? "rotated" : ""}`}
-          />
-        </button>
-
-        {isAuthorOpen && (
-          <div className="dropdown-menu dropdown-menu-with-search">
-            {/* Search Input */}
-            <div className="dropdown-search">
-              <i className="fa-solid fa-magnifying-glass" />
-              <input
-                ref={authorSearchInputRef}
-                type="text"
-                value={authorSearch}
-                onChange={(e) => handleAuthorSearchChange(e.target.value)}
-                placeholder="Пошук автора..."
-                className="dropdown-search-input"
-              />
-              {authorSearch && (
+          {isStatusOpen && (
+            <div className="dropdown-menu dropdown-menu-with-search">
+              {/* Clear selection */}
+              {selectedStatuses.length > 0 && (
                 <button
                   type="button"
-                  className="dropdown-search-clear"
-                  onClick={() => setAuthorSearch("")}
+                  className="dropdown-item dropdown-item-clear"
+                  onClick={handleClearStatuses}
                 >
                   <i className="fa-solid fa-xmark" />
+                  <span>Очистити фільтр</span>
                 </button>
               )}
+              {STATUS_OPTIONS.map((option) => {
+                const isSelected = selectedStatuses.includes(option.value);
+                return (
+                  <button
+                    key={option.value}
+                    type="button"
+                    className={`dropdown-item dropdown-item-checkbox ${isSelected ? "active" : ""}`}
+                    onClick={() => handleStatusToggle(option.value)}
+                  >
+                    <span className={`checkbox ${isSelected ? "checked" : ""}`}>
+                      {isSelected && <i className="fa-solid fa-check" />}
+                    </span>
+                    <i className={option.icon} />
+                    <span>{option.label}</span>
+                  </button>
+                );
+              })}
             </div>
+          )}
+        </div>
 
-            {/* Clear selection */}
-            {selectedAuthors.length > 0 && !authorSearch && (
-              <button
-                type="button"
-                className="dropdown-item dropdown-item-clear"
-                onClick={handleClearAuthors}
+        {/* Author Multi-Select Dropdown */}
+        <div className="custom-dropdown" ref={authorDropdownRef}>
+          <button
+            type="button"
+            className={`dropdown-trigger ${isAuthorOpen ? "open" : ""} ${selectedAuthors.length > 0 ? "has-value" : ""}`}
+            onClick={handleAuthorDropdownToggle}
+          >
+            <i className="fa-solid fa-user" />
+            <span>{authorLabel}</span>
+            <i
+              className={`fa-solid fa-chevron-down dropdown-arrow ${isAuthorOpen ? "rotated" : ""}`}
+            />
+          </button>
+
+          {isAuthorOpen && (
+            <div className="dropdown-menu dropdown-menu-with-search">
+              {/* Search Input */}
+              <div className="dropdown-search">
+                <i className="fa-solid fa-magnifying-glass" />
+                <input
+                  ref={authorSearchInputRef}
+                  type="text"
+                  value={authorSearch}
+                  onChange={(e) => handleAuthorSearchChange(e.target.value)}
+                  placeholder="Пошук автора..."
+                  className="dropdown-search-input"
+                />
+                {authorSearch && (
+                  <button
+                    type="button"
+                    className="dropdown-search-clear"
+                    onClick={() => setAuthorSearch("")}
+                  >
+                    <i className="fa-solid fa-xmark" />
+                  </button>
+                )}
+              </div>
+
+              {/* Clear selection */}
+              {selectedAuthors.length > 0 && !authorSearch && (
+                <button
+                  type="button"
+                  className="dropdown-item dropdown-item-clear"
+                  onClick={handleClearAuthors}
+                >
+                  <i className="fa-solid fa-xmark" />
+                  <span>Очистити фільтр ({selectedAuthors.length})</span>
+                </button>
+              )}
+
+              {/* Scrollable List */}
+              <div
+                ref={authorListRef}
+                className="dropdown-list"
+                onScroll={handleAuthorScroll}
               >
-                <i className="fa-solid fa-xmark" />
-                <span>Очистити фільтр ({selectedAuthors.length})</span>
-              </button>
-            )}
+                {authorsLoading ? (
+                  <div className="dropdown-loading">
+                    <div className="spinner spinner-small" />
+                  </div>
+                ) : visibleAuthors.length === 0 ? (
+                  <div className="dropdown-empty">
+                    <span>Автора не знайдено</span>
+                  </div>
+                ) : (
+                  <>
+                    {visibleAuthors.map((authorName) => {
+                      const isSelected = selectedAuthors.includes(authorName);
+                      return (
+                        <button
+                          key={authorName}
+                          type="button"
+                          className={`dropdown-item dropdown-item-checkbox ${isSelected ? "active" : ""}`}
+                          onClick={() => handleAuthorToggle(authorName)}
+                        >
+                          <span
+                            className={`checkbox ${isSelected ? "checked" : ""}`}
+                          >
+                            {isSelected && <i className="fa-solid fa-check" />}
+                          </span>
+                          <i className="fa-solid fa-user" />
+                          <span>{authorName}</span>
+                        </button>
+                      );
+                    })}
+                    {hasMoreAuthors && (
+                      <div className="dropdown-loading">
+                        <div className="spinner spinner-small" />
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
 
-            {/* Scrollable List */}
-            <div
-              ref={authorListRef}
-              className="dropdown-list"
-              onScroll={handleAuthorScroll}
-            >
-              {authorsLoading ? (
-                <div className="dropdown-loading">
-                  <div className="spinner spinner-small" />
+              {/* Results Count */}
+              {!authorsLoading && authors.length > 0 && (
+                <div className="dropdown-footer">
+                  <span>
+                    {authorSearch
+                      ? `Знайдено: ${filteredAuthors.length}`
+                      : `Всього: ${authors.length}`}
+                  </span>
                 </div>
-              ) : visibleAuthors.length === 0 ? (
-                <div className="dropdown-empty">
-                  <span>Автора не знайдено</span>
-                </div>
-              ) : (
-                <>
-                  {visibleAuthors.map((authorName) => {
-                    const isSelected = selectedAuthors.includes(authorName);
-                    return (
-                      <button
-                        key={authorName}
-                        type="button"
-                        className={`dropdown-item dropdown-item-checkbox ${isSelected ? "active" : ""}`}
-                        onClick={() => handleAuthorToggle(authorName)}
-                      >
-                        <span className={`checkbox ${isSelected ? "checked" : ""}`}>
-                          {isSelected && <i className="fa-solid fa-check" />}
-                        </span>
-                        <i className="fa-solid fa-user" />
-                        <span>{authorName}</span>
-                      </button>
-                    );
-                  })}
-                  {hasMoreAuthors && (
-                    <div className="dropdown-loading">
-                      <div className="spinner spinner-small" />
-                    </div>
-                  )}
-                </>
               )}
             </div>
-
-            {/* Results Count */}
-            {!authorsLoading && authors.length > 0 && (
-              <div className="dropdown-footer">
-                <span>
-                  {authorSearch
-                    ? `Знайдено: ${filteredAuthors.length}`
-                    : `Всього: ${authors.length}`}
-                </span>
-              </div>
-            )}
-          </div>
-        )}
-      </div>
+          )}
+        </div>
       </div>
 
       {/* Selected filters chips - outside of flex container */}
