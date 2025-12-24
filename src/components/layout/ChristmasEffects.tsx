@@ -108,18 +108,9 @@ export function ChristmasEffects() {
             right: -40px;
           }
         }
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
           .pine-corner {
-            width: 110px;
-            height: 110px;
-          }
-          .pine-top-left {
-            top: -30px;
-            left: -30px;
-          }
-          .pine-top-right {
-            top: -30px;
-            right: -30px;
+            display: none;
           }
         }
       `}</style>

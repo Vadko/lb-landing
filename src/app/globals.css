@@ -1690,6 +1690,8 @@ footer {
     font-size: 1rem;
     font-family: inherit;
     transition: all 0.3s ease;
+    position: relative;
+    z-index: 0;
 }
 
 .search-input:focus {
@@ -1713,8 +1715,10 @@ footer {
     left: 18px;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--text-sec);
+    color: var(--accent-blue);
     font-size: 1rem;
+    z-index: 1;
+    pointer-events: none;
 }
 
 /* Custom Dropdown */
@@ -3180,6 +3184,10 @@ footer {
     }
 
     .search-wrapper {
+        width: 100%;
+    }
+
+    .search-input {
         width: 100%;
     }
 
