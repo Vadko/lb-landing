@@ -14,9 +14,6 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:cf": "opennextjs-cloudflare build",
-    "preview": "opennextjs-cloudflare preview",
-    "deploy:cf": "wrangler deploy",
     "start": "next start",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
@@ -33,6 +30,7 @@
     "@tsparticles/slim": "^3.9.1",
     "canvas-confetti": "^1.9.4",
     "framer-motion": "^12.23.26",
+    "ioredis": "^5.8.2",
     "next": "16.0.10",
     "next-themes": "^0.4.6",
     "react": "19.2.3",
@@ -40,7 +38,6 @@
     "react-snowfall": "^2.4.0"
   },
   "devDependencies": {
-    "@opennextjs/cloudflare": "^1.14.6",
     "@tailwindcss/postcss": "^4",
     "@types/canvas-confetti": "^1.9.0",
     "@types/node": "^20",
@@ -55,7 +52,6 @@
     "knip": "^5.73.4",
     "prettier": "^3.7.4",
     "tailwindcss": "^4",
-    "typescript": "^5",
-    "wrangler": "^4.54.0"
+    "typescript": "^5"
   }
 }
