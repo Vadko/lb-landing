@@ -155,12 +155,12 @@ export function GamesSearch({
 
   // Status button label
   const statusLabel = useMemo(() => {
-    if (selectedStatuses.length === 0) return "Усі статуси";
+    if (selectedStatuses.length === 0) return "Усі стани";
     if (selectedStatuses.length === 1) {
       const opt = STATUS_OPTIONS.find((o) => o.value === selectedStatuses[0]);
       return opt?.label || selectedStatuses[0];
     }
-    return `${selectedStatuses.length} статуси`;
+    return `${selectedStatuses.length} стани`;
   }, [selectedStatuses]);
 
   // Author button label
