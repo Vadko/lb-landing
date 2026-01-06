@@ -23,6 +23,7 @@ import {
   GameInstallSteps,
 } from "@/components/game-detail";
 import { GameTeamLink } from "@/components/ui/GameTeamLink";
+import { getFeaturedInfo } from "@/lib/featuredTranslations";
 
 interface PageProps {
   params: Promise<{ slug: string; team: string }>;
@@ -111,6 +112,7 @@ export default async function GameTranslationPage({ params }: PageProps) {
   const status = STATUS_LABELS[game.status] || STATUS_LABELS.planned;
   const bannerUrl = getImageUrl(game.banner_path, game.updated_at);
   const logoUrl = getImageUrl(game.logo_path, game.updated_at);
+  const featuredInfo = getFeaturedInfo(slug, game.team);
 
   const breadcrumbItems = [
     { name: "Головна", url: "https://lblauncher.com" },
@@ -153,6 +155,12 @@ export default async function GameTranslationPage({ params }: PageProps) {
                   <h1>{game.name}</h1>
                   <span className={status.className}>{status.label}</span>
                 </div>
+                {featuredInfo && (
+                  <div className="featured-badge-block">
+                    <i className="fa-solid fa-trophy" />
+                    {featuredInfo.description}
+                  </div>
+                )}
                 <p className="game-meta">
                   Переклад від <GameTeamLink team={game.team} />
                   {game.version && ` • Версія ${game.version}`}

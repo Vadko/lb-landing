@@ -190,7 +190,7 @@ export function HeroSection() {
               <div>
                 <i className="fa-solid fa-download" />
                 <span>
-                  {downloadLinks.totalDownloads.toLocaleString()}+ Завантажень
+                  {downloadLinks.totalDownloads.toLocaleString('uk-UA')}+ Завантажень
                 </span>
               </div>
             )}
