@@ -7,8 +7,6 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { BackgroundEffects } from "@/components/layout/BackgroundEffects";
-import { ChristmasEffects } from "@/components/layout/ChristmasEffects";
-import { ChristmasProvider } from "@/providers/ChristmasProvider";
 
 const outfit = Outfit({
   subsets: ["latin", "latin-ext"],
@@ -132,14 +130,11 @@ export default function RootLayout({
       <body className="antialiased">
         <ThemeProvider>
           <QueryProvider>
-            <ChristmasProvider>
-              <ChristmasEffects />
-              <BackgroundEffects />
-              <Navbar />
-              <main className="relative z-10">{children}</main>
-              <Footer />
-              <ScrollToTop />
-            </ChristmasProvider>
+            <BackgroundEffects />
+            <Navbar />
+            <main className="relative z-10">{children}</main>
+            <Footer />
+            <ScrollToTop />
           </QueryProvider>
         </ThemeProvider>
       </body>

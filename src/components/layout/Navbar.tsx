@@ -4,11 +4,9 @@ import Link from "next/link";
 import { useTheme } from "next-themes";
 import { useCallback } from "react";
 import { useMounted } from "@/hooks/useClientValue";
-import { useChristmas } from "@/providers/ChristmasProvider";
 
 export function Navbar() {
   const { theme, setTheme } = useTheme();
-  const { enabled: christmasEnabled, toggle: toggleChristmas } = useChristmas();
   const mounted = useMounted();
 
   const toggleTheme = useCallback(() => {
@@ -83,24 +81,14 @@ export function Navbar() {
           </a>
 
           {mounted && (
-            <>
-              <button
-                onClick={toggleChristmas}
-                className="theme-toggle"
-                title={christmasEnabled ? "Вимкнути новорічні ефекти" : "Увімкнути новорічні ефекти"}
-                style={{ opacity: christmasEnabled ? 1 : 0.5 }}
-              >
-                🎄
-              </button>
-              <button
-                onClick={toggleTheme}
-                className="theme-toggle"
-                title="Змінити тему"
-              >
-                <i className="fa-solid fa-sun" />
-                <i className="fa-solid fa-moon" />
-              </button>
-            </>
+            <button
+              onClick={toggleTheme}
+              className="theme-toggle"
+              title="Змінити тему"
+            >
+              <i className="fa-solid fa-sun" />
+              <i className="fa-solid fa-moon" />
+            </button>
           )}
         </div>
       </div>
