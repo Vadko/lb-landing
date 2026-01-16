@@ -7,8 +7,6 @@ const config: KnipConfig = {
   ignoreDependencies: [
     "@typescript-eslint/eslint-plugin",
     "@typescript-eslint/parser",
-    "eslint-config-prettier",
-    "eslint-plugin-prettier",
     "tailwindcss",
     "postcss",
   ],
