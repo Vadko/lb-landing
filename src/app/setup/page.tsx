@@ -23,8 +23,13 @@ const getOSPlatform = (): Platform => {
 const emptySubscribe = () => () => {};
 
 export default function SetupPage() {
-  const detectedPlatform = useSyncExternalStore(emptySubscribe, getOSPlatform, () => "windows" as Platform);
-  const [activePlatform, setActivePlatform] = useState<Platform>(detectedPlatform);
+  const detectedPlatform = useSyncExternalStore(
+    emptySubscribe,
+    getOSPlatform,
+    () => "windows" as Platform
+  );
+  const [activePlatform, setActivePlatform] =
+    useState<Platform>(detectedPlatform);
 
   return (
     <section className="setup-page">
@@ -159,9 +164,7 @@ function WindowsInstructions() {
           <h4>Smart App Control блокує (Windows 11)</h4>
           <ol>
             <li>Відкрийте &quot;Безпека Windows&quot;</li>
-            <li>
-              Перейдіть до &quot;Керування програмами та браузером&quot;
-            </li>
+            <li>Перейдіть до &quot;Керування програмами та браузером&quot;</li>
             <li>Натисніть &quot;Параметри Smart App Control&quot;</li>
             <li>Оберіть &quot;Вимкнути&quot;</li>
           </ol>

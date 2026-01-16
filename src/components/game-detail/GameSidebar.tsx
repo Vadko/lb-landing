@@ -73,7 +73,7 @@ export function GameSidebar({ game }: GameSidebarProps) {
           {game.downloads && game.downloads > 0 ? (
             <div className="game-stat">
               <span>Завантажень</span>
-              <strong>{game.downloads.toLocaleString('uk-UA')}</strong>
+              <strong>{game.downloads.toLocaleString("uk-UA")}</strong>
             </div>
           ) : null}
           {game.platforms && game.platforms.length > 0 && (

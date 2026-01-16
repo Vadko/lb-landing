@@ -28,11 +28,15 @@ export function FundraisingProgress({
       <div className="fundraising-content">
         <div className="fundraising-header">
           <span className="fundraising-amounts">
-            <span className="fundraising-current">{formatAmount(currentAmount)} ₴</span>
+            <span className="fundraising-current">
+              {formatAmount(currentAmount)} ₴
+            </span>
             <span className="fundraising-separator"> / </span>
             <span className="fundraising-goal">{formatAmount(goal)} ₴</span>
           </span>
-          <span className={`fundraising-percentage ${isCompleted ? "completed" : ""}`}>
+          <span
+            className={`fundraising-percentage ${isCompleted ? "completed" : ""}`}
+          >
             {percentage}%
           </span>
         </div>
@@ -44,7 +48,8 @@ export function FundraisingProgress({
         </div>
         {isCompleted && (
           <p className="fundraising-message success">
-            <i className="fa-solid fa-check-circle" /> Збір завершено! Дякуємо всім, хто підтримав!
+            <i className="fa-solid fa-check-circle" /> Збір завершено! Дякуємо
+            всім, хто підтримав!
           </p>
         )}
       </div>

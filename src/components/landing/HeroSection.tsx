@@ -96,7 +96,6 @@ export function HeroSection() {
     return "fa-windows";
   };
 
-
   const versionText = isReleaseLoading
     ? "Завантаження..."
     : downloadLinks.version && downloadLinks.publishedAt
@@ -190,7 +189,8 @@ export function HeroSection() {
               <div>
                 <i className="fa-solid fa-download" />
                 <span>
-                  {downloadLinks.totalDownloads.toLocaleString('uk-UA')}+ Завантажень
+                  {downloadLinks.totalDownloads.toLocaleString("uk-UA")}+
+                  Завантажень
                 </span>
               </div>
             )}

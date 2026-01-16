@@ -137,9 +137,7 @@ export function GamesList() {
           </div>
 
           {/* Observer for infinite scroll - always at the end */}
-          {hasNextPage && (
-            <div ref={observerTarget} style={{ height: 1 }} />
-          )}
+          {hasNextPage && <div ref={observerTarget} style={{ height: 1 }} />}
 
           {isFetchingNextPage && (
             <div className="loading-spinner">

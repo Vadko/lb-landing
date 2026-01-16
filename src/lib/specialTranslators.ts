@@ -5,7 +5,7 @@ export interface SpecialTranslator {
   description: string;
 }
 
-const SPECIAL_DESCRIPTION = 'Допомагає розвивати LB Launcher з перших днів';
+const SPECIAL_DESCRIPTION = "Допомагає розвивати LB Launcher з перших днів";
 
 export const SPECIAL_TRANSLATORS: SpecialTranslator[] = [
   { name: "Владислав", team: "Sent_DeZ", description: SPECIAL_DESCRIPTION },
@@ -21,11 +21,13 @@ export const SPECIAL_TRANSLATORS: SpecialTranslator[] = [
 ];
 
 // Get all team names for matching
-export const SPECIAL_TRANSLATOR_TEAMS = SPECIAL_TRANSLATORS
-  .filter((t) => t.team)
-  .map((t) => t.team!.toLowerCase());
+export const SPECIAL_TRANSLATOR_TEAMS = SPECIAL_TRANSLATORS.filter(
+  (t) => t.team
+).map((t) => t.team!.toLowerCase());
 
-export const SPECIAL_TRANSLATOR_NAMES = SPECIAL_TRANSLATORS.map((t) => t.name.toLowerCase());
+export const SPECIAL_TRANSLATOR_NAMES = SPECIAL_TRANSLATORS.map((t) =>
+  t.name.toLowerCase()
+);
 
 // Check if a team name matches any special translator
 export const isSpecialTranslator = (teamName: string): boolean => {
@@ -37,13 +39,17 @@ export const isSpecialTranslator = (teamName: string): boolean => {
 };
 
 // Get special translator info for a specific author name
-export const getSpecialTranslatorInfo = (authorName: string): SpecialTranslator | null => {
+export const getSpecialTranslatorInfo = (
+  authorName: string
+): SpecialTranslator | null => {
   const authorLower = authorName.toLowerCase().trim();
-  return SPECIAL_TRANSLATORS.find(
-    (t) =>
-      t.name.toLowerCase() === authorLower ||
-      (t.team && t.team.toLowerCase() === authorLower)
-  ) || null;
+  return (
+    SPECIAL_TRANSLATORS.find(
+      (t) =>
+        t.name.toLowerCase() === authorLower ||
+        (t.team && t.team.toLowerCase() === authorLower)
+    ) || null
+  );
 };
 
 // Check if a single author name is a special translator

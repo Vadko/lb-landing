@@ -20,7 +20,13 @@ const STATUS_LABELS: Record<string, { label: string; className: string }> = {
   planned: { label: "Заплановано", className: "game-card-status planned" },
 };
 
-function TranslationRow({ translation, slug }: { translation: TranslationItem; slug: string }) {
+function TranslationRow({
+  translation,
+  slug,
+}: {
+  translation: TranslationItem;
+  slug: string;
+}) {
   const status = STATUS_LABELS[translation.status] || STATUS_LABELS.planned;
   const progress = translation.translation_progress ?? 0;
 
@@ -58,9 +64,10 @@ export function GameCard({ game }: GameCardProps) {
     getImageUrl(game.thumbnail_path, game.updated_at);
 
   // For single translation, link directly to the translation page
-  const cardHref = game.translations.length === 1
-    ? `/games/${game.slug}/${teamToSlug(game.translations[0].team)}`
-    : `/games/${game.slug}`;
+  const cardHref =
+    game.translations.length === 1
+      ? `/games/${game.slug}/${teamToSlug(game.translations[0].team)}`
+      : `/games/${game.slug}`;
 
   return (
     <div className="game-card">

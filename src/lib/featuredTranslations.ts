@@ -30,8 +30,7 @@ export const isFeaturedTranslation = (
   team?: string
 ): boolean => {
   return FEATURED_TRANSLATIONS.some(
-    (t) =>
-      t.gameSlug === gameSlug && (t.team === undefined || t.team === team)
+    (t) => t.gameSlug === gameSlug && (t.team === undefined || t.team === team)
   );
 };
 

@@ -1,6 +1,6 @@
-import CyrillicToTranslit from 'cyrillic-to-translit-js';
+import CyrillicToTranslit from "cyrillic-to-translit-js";
 
-const translitUk = CyrillicToTranslit({ preset: 'uk' });
+const translitUk = CyrillicToTranslit({ preset: "uk" });
 
 function getTransliteration(input: string): string | null {
   const hasCyrillic = /[а-яіїєґА-ЯІЇЄҐ]/.test(input);
@@ -28,7 +28,7 @@ function getTransliteration(input: string): string | null {
  * "batman" → "'batman':* | 'батман':*"
  */
 export function buildFtsQuery(input: string): string {
-  if (!input) return '';
+  if (!input) return "";
 
   const normalized = input.toLowerCase().trim();
   const translit = getTransliteration(input);
@@ -39,5 +39,5 @@ export function buildFtsQuery(input: string): string {
     queries.push(`'${translit}':*`);
   }
 
-  return queries.join(' | ');
+  return queries.join(" | ");
 }

@@ -39,13 +39,16 @@ function parseTranslations(translations: unknown): TranslationItem[] {
 // Get the most recent updated_at from translations
 function getLatestUpdatedAt(translations: TranslationItem[]): string {
   if (translations.length === 0) return new Date().toISOString();
-  return translations.reduce((latest, t) =>
-    t.updated_at > latest ? t.updated_at : latest
-  , translations[0].updated_at);
+  return translations.reduce(
+    (latest, t) => (t.updated_at > latest ? t.updated_at : latest),
+    translations[0].updated_at
+  );
 }
 
 // Map database row to GameGroup
-function mapRowToGameGroup(row: GamesGroupedRow & { slug: string; name: string }): GameGroup {
+function mapRowToGameGroup(
+  row: GamesGroupedRow & { slug: string; name: string }
+): GameGroup {
   const translations = parseTranslations(row.translations);
   return {
     slug: row.slug,
@@ -75,7 +78,13 @@ async function fetchGamesGrouped({
 }: FetchGamesParams): Promise<GamesGroupedResponse> {
   // If filtering by statuses or authors, we need to filter by checking translations JSON
   if (hasActiveFilters(statuses, authors)) {
-    return fetchGamesGroupedWithFilter({ offset, limit, search, statuses, authors });
+    return fetchGamesGroupedWithFilter({
+      offset,
+      limit,
+      search,
+      statuses,
+      authors,
+    });
   }
 
   let query = supabase
@@ -115,10 +124,7 @@ async function fetchGamesGroupedWithFilter({
   statuses,
   authors,
 }: FetchGamesParams): Promise<GamesGroupedResponse> {
-  let query = supabase
-    .from("games_grouped")
-    .select("*")
-    .order("name");
+  let query = supabase.from("games_grouped").select("*").order("name");
 
   if (search) {
     const ftsQuery = buildFtsQuery(search);
